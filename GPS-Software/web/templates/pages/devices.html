@@ -1,0 +1,255 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block parent_classes %}flex flex-col{% endblock %}
+{% block content %}
+<div class="flex gap-3 grow">
+    <!-- Left Sidebar -->
+    <div id="users-sidebar" class="w-80 h-full bg-base-200 overflow-y-auto">
+        <!-- Header -->
+        <div class="p-2">
+            <div class="flex items-center justify-start p-2 mb-2">
+                <h1 class="text-lg font-semibold">User List</h1>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="relative">
+                <input type="text" placeholder="Search for a user..."
+                class="input input-bordered w-full ps-4" />
+                <button
+                    class="absolute right-2 top-1/2 -translate-y-1/2 bg-blue-500 text-white p-1.5 rounded-md hover:bg-blue-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Account List -->
+        <div class="p-2">
+            <div class="rounded-lg">
+                <!-- User Collapsible Header -->
+                <details class="dropdown w-full">
+                    <summary class="flex items-center p-3 cursor-pointer btn btn-ghost justify-start">
+                        <div class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                            </svg>
+                            <span class="text-gray-700 dark:text-gray-300 font-medium">I-TRUST SYSTEMS</span>
+                        </div>
+                        <span class="ms-auto text-sm text-gray-500 dark:text-gray-400">(100 Devices)</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </summary>
+
+                    <!-- Collapsible Content -->
+                    <div class="space-y-1">
+                        <!-- Active Account -->
+                        <button class="flex justify-start items-center w-full ps-8 p-2 btn btn-ghost">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span class="text-gray-600 dark:text-gray-300">Active Devices</span>
+                            <span class="ms-auto text-sm text-gray-500 dark:text-gray-400">(89/100)</span>
+                        </button>
+
+                        <!-- Damaged Device -->
+                        <button class="flex justify-start items-center w-full ps-8 p-2 btn btn-ghost">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                            </svg>
+                            <span class="text-gray-600 dark:text-gray-300">Damaged devices</span>
+                            <span class="ms-auto text-sm text-gray-500 dark:text-gray-400">(2/100)</span>
+                        </button>
+
+                        <!-- Disabled Devices -->
+                        <button class="flex justify-start items-center w-full ps-8 p-2 btn btn-ghost">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                            </svg>
+                            <span class="text-gray-600 dark:text-gray-300">Disabled Devices</span>
+                            <span class="ms-auto text-sm text-gray-500 dark:text-gray-400">(8/100)</span>
+                        </button>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col overflow-hidden">
+        <!-- Main content area -->
+        <div class="flex-1 overflow-x-hidden overflow-y-auto bg-base-200">
+            <div class="container mx-auto px-6 py-6">
+                <h1 class="text-2xl font-semibold mb-4">Device Management</h1>
+                <!-- Search and Filters -->
+                <div class="mb-8">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                        <div class="w-full md:w-1/2 mb-4 md:mb-0">
+                            <div class="relative">
+                                <input type="text" placeholder="Search devices..."
+                                    class="input input-bordered w-full pl-10" />
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2">
+                            <select class="select select-bordered">
+                                <option disabled selected>Filter by Status</option>
+                                <option>Active</option>
+                                <option>Inactive</option>
+                            </select>
+                            <select class="select select-bordered">
+                                <option disabled selected>Filter by Model</option>
+                                <option>Model A</option>
+                                <option>Model B</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="bg-base-100 shadow-md rounded-lg mb-8 p-4">
+                    <div class="flex items-center justify-start">
+                        <div class="flex items-center gap-2">
+                            <select class="select select-bordered">
+                                <option disabled selected>Actions</option>
+                                <option>Delete</option>
+                                <option>Suspend</option>
+                            </select>
+                            <button disabled class="btn btn-neutral">Apply</button>
+                        </div>
+                        <div class="dropdown dropdown-end ms-auto">
+                            <label tabindex="0" class="btn m-1">Export</label>
+                            <ul tabindex="0"
+                                class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 z-[99]">
+                                <li><a>Export as CSV</a></li>
+                                <li><a>Export as PDF</a></li>
+                            </ul>
+                        </div>
+                        <button class="btn btn-success text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 -960 960 960" fill="currentcolor"><path d="M450-450H200v-60h250v-250h60v250h250v60H510v250h-60v-250Z"/></svg>
+                            Add Device
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Devices Table -->
+                <div class="bg-base-100 shadow-md rounded-lg">
+                    <table class="table w-full">
+                        <thead>
+                            <tr>
+                                <th class="w-10">
+                                    <input type="checkbox" class="checkbox" />
+                                </th>
+                                <th>#</th>
+                                <th>User</th>
+                                <th>Device Label</th>
+                                <th>Device ID</th>
+                                <th>Device Model</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="cursor-pointer hover">
+                                <td>
+                                    <input type="checkbox" class="checkbox" />
+                                </td>
+                                <td>1</td>
+                                <td>I-TRUST SYSTEMS</td>
+                                <td>Rashed's Truck</td>
+                                <td>12542</td>
+                                <td>DEV-001</td>
+                                <td><span class="badge badge-success">Active</span></td>
+                                <td>
+                                    <div class="flex">
+                                        <a class="hover-float pe-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 -960 960 960" fill="currentColor"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
+                                        </a>
+                                        <a class="hover-float px-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 -960 960 960" fill="currentColor"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg>
+                                        </a>
+                                        <a class="hover-float px-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 -960 960 960" fill="currentColor"><path d="M480-480q33 0 56.5-23.5T560-560q0-33-23.5-56.5T480-640q-33 0-56.5 23.5T400-560q0 33 23.5 56.5T480-480Zm0 294q122-112 181-203.5T720-552q0-109-69.5-178.5T480-800q-101 0-170.5 69.5T240-552q0 71 59 162.5T480-186Zm0 106Q319-217 239.5-334.5T160-552q0-150 96.5-239T480-880q127 0 223.5 89T800-552q0 100-79.5 217.5T480-80Zm0-480Z"/></svg>
+                                        </a>
+                                        <div class="dropdown dropdown-hover dropdown-end pe-2">
+                                            <button class="hover-float">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 -960 960 960" fill="currentColor"><path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z"/></svg>
+                                            </button>
+                                            <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+                                                <li><a>Alerts</a></li>
+                                                <li><a>Geofence</a></li>
+                                                <li><a>Send Command</a></li>
+                                                <li class="flex flex-row gap-1 justify-end items-center">
+                                                    <p class="me-auto font-bold text-md">Status:</p>
+                                                    <button class="btn btn-sm btn-square btn-error">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 -960 960 960" fill="currentColor"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-square btn-warning"></button>
+                                                    <button class="btn btn-sm btn-square btn-success"></button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="cursor-pointer hover">
+                                <td>
+                                    <input type="checkbox" class="checkbox" />
+                                </td>
+                                <td>2</td>
+                                <td>I-TRUST SYSTEMS</td>
+                                <td>Company Car</td>
+                                <td>12543</td>
+                                <td>DEV-002</td>
+                                <td><span class="badge badge-warning">Inactive</span></td>
+                                <td>
+                                    <div class="flex">
+                                        <a class="hover-float pe-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 -960 960 960" fill="currentColor"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
+                                        </a>
+                                        <a class="hover-float px-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 -960 960 960" fill="currentColor"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg>
+                                        </a>
+                                        <a class="hover-float px-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 -960 960 960" fill="currentColor"><path d="M480-480q33 0 56.5-23.5T560-560q0-33-23.5-56.5T480-640q-33 0-56.5 23.5T400-560q0 33 23.5 56.5T480-480Zm0 294q122-112 181-203.5T720-552q0-109-69.5-178.5T480-800q-101 0-170.5 69.5T240-552q0 71 59 162.5T480-186Zm0 106Q319-217 239.5-334.5T160-552q0-150 96.5-239T480-880q127 0 223.5 89T800-552q0 100-79.5 217.5T480-80Zm0-480Z"/></svg>
+                                        </a>
+                                        <div class="dropdown dropdown-hover dropdown-end pe-2">
+                                            <button class="hover-float">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 -960 960 960" fill="currentColor"><path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z"/></svg>
+                                            </button>
+                                            <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+                                                <li><a>Alerts</a></li>
+                                                <li><a>Geofence</a></li>
+                                                <li><a>Send Command</a></li>
+                                                <li class="flex flex-row gap-1 justify-end items-center">
+                                                    <p class="me-auto font-bold text-md">Status:</p>
+                                                    <button class="btn btn-sm btn-square btn-error"></button>
+                                                    <button class="btn btn-sm btn-square btn-warning">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 -960 960 960" fill="currentColor"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-square btn-success"></button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

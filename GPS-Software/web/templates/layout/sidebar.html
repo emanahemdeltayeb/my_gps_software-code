@@ -1,0 +1,77 @@
+{% load static %}
+{% load i18n %}
+
+{% get_current_language as LANGUAGE_CODE %}
+
+<datalist id="list-actions">
+    {% for action in app_actions %}
+        <option value="{% translate action %}">{% translate action %}</option>
+    {% endfor %}
+</datalist>
+
+<aside class="flex flex-column flex-shrink-0">
+    <ul class="menu menu-lg bg-base-200 rounded-lg gap-2 flex-nowrap">
+        <!-- search bar -->
+        <form action="test" method="get" class="p-0">
+            <label class="input input-bordered flex items-center input-md w-full min-w-64 col-span-2">
+                <input id="search" type="text" name="q" placeholder="{% translate 'Search all actions & pages...' %}" list="list-actions" class="grow" />
+            </label>
+        </form>
+        <div class="overflow-x-hidden overflow-y-auto grow">
+        <!-- menu items -->
+        <li>
+            <a id="dashboard" href="">
+                <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor"><path d="M418-340q24 24 62 23.5t56-27.5l224-336-336 224q-27 18-28.5 55t22.5 61Zm62-460q59 0 113.5 16.5T696-734l-76 48q-33-17-68.5-25.5T480-720q-133 0-226.5 93.5T160-400q0 42 11.5 83t32.5 77h552q23-38 33.5-79t10.5-85q0-36-8.5-70T766-540l48-76q30 47 47.5 100T880-406q1 57-13 109t-41 99q-11 18-30 28t-40 10H204q-21 0-40-10t-30-28q-26-45-40-95.5T80-400q0-83 31.5-155.5t86-127Q252-737 325-768.5T480-800Zm7 313Z"/></svg>
+
+                {% translate 'Monitoring' %}
+            </a>
+        </li>
+        <li>
+            <a id="devices" href="/devices/">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" viewBox="0 -960 960 960" fill="currentcolor"><path d="M240-160q-50 0-85-35t-35-85H40v-440q0-33 23.5-56.5T120-800h560v160h120l120 160v200h-80q0 50-35 85t-85 35q-50 0-85-35t-35-85H360q0 50-35 85t-85 35Zm0-80q17 0 28.5-11.5T280-280q0-17-11.5-28.5T240-320q-17 0-28.5 11.5T200-280q0 17 11.5 28.5T240-240ZM120-360h32q17-18 39-29t49-11q27 0 49 11t39 29h272v-360H120v360Zm600 120q17 0 28.5-11.5T760-280q0-17-11.5-28.5T720-320q-17 0-28.5 11.5T680-280q0 17 11.5 28.5T720-240Zm-40-200h170l-90-120h-80v120ZM360-540Z"/></svg>
+
+                {% translate 'Devices' %}
+            </a>
+        </li>
+        <li>
+            <a id="alerts" href="/alerts/">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" viewBox="0 -960 960 960" fill="currentcolor"><path d="M160-200v-80h80v-280q0-83 50-147.5T420-792v-28q0-25 17.5-42.5T480-880q25 0 42.5 17.5T540-820v28q80 20 130 84.5T720-560v280h80v80H160Zm320-300Zm0 420q-33 0-56.5-23.5T400-160h160q0 33-23.5 56.5T480-80ZM320-280h320v-280q0-66-47-113t-113-47q-66 0-113 47t-47 113v280Z"/></svg>
+                
+                {% translate 'Alerts' %}
+            </a>
+        </li>
+        <li>
+            <a id="geofence" href="/geofence/">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" viewBox="0 -960 960 960" fill="currentcolor"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80-28-28q-6-6-9-13t-3-15v-224q-33 0-56.5-23.5T360-520v-40L235-685q-35 42-55 94t-20 111q0 134 93 227t227 93Zm40-2q119-15 199.5-105T800-480q0-133-93.5-226.5T480-800q-44 0-84.5 11.5T320-757v77h142q18 0 34.5 8t27.5 22l56 70h60q17 0 28.5 11.5T680-540v42q0 9-2.5 17t-7.5 16L520-240v78Z"/></svg>
+                
+                {% translate 'Geofence' %}
+            </a>
+        </li>
+        <li>
+            <details>
+                <summary>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" viewBox="0 -960 960 960" fill="currentcolor"><path d="M320-480v-80h320v80H320Zm0-160v-80h320v80H320Zm-80 240h300q29 0 54 12.5t42 35.5l84 110v-558H240v400Zm0 240h442L573-303q-6-8-14.5-12.5T540-320H240v160Zm480 80H240q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h480q33 0 56.5 23.5T800-800v640q0 33-23.5 56.5T720-80Zm-480-80v-640 640Zm0-160v-80 80Z"/></svg>
+
+                    Reports
+                </summary>
+                <ul>
+                    <li><a href="">Motion Overview</a></li>
+                    <li><a href="">Daily Mileage</a></li>
+                    <li><a href="">Parking</a></li>
+                    <li><a href="">Offline</a></li>
+                    <li><a href="">Trip Overview</a></li>
+                    <li><a href="">Alert Overview</a></li>
+                </ul>
+            </details>
+        </li>
+        </div>
+        {% include 'components/sidebar_footer.html' %}
+    </ul>
+</aside>
+
+<script>
+    var selected = "{{ selected }}";
+    if (selected) {
+        $('#' + selected).addClass('active');
+    }
+</script>

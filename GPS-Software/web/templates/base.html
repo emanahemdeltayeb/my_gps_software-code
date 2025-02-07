@@ -1,0 +1,39 @@
+{% load static %}
+{% load i18n %}
+
+<html {% if theme == 'dark' %}class="dark" data-theme="dark"{% endif %}>
+{% include 'head.html' %}
+{% get_current_language as LANGUAGE_CODE %}
+<body {% if LANGUAGE_CODE == 'ar' %}dir="rtl"{% endif %} class="min-h-full">
+    <!-- include components: navigation, sidebar. And add block 'content' -->
+    {% include 'layout/nav.html' %}
+    <div class="w-screen flex flex-row" style="height: calc(100vh - 72px)">
+        {% include 'layout/sidebar.html' %}
+        <main class="{% block parent_classes_override %}container-fluid h-full w-full p-3{% endblock %} {% block parent_classes %}{% endblock %}" id="mainContainer">
+            {% if not no_breadcrumbs %}
+            <div class="text-md breadcrumbs">
+                <ul>
+                    {% for item in breadcrumbs %}
+                        <li>
+                            {% if forloop.first %}
+                            <svg class="w-5 h-5 me-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg>
+                            {% endif %}
+                            {% if forloop.last %}<strong>{% endif %}
+                            {% if item.1 %}
+                                <a href="{{ item.1 }}">{% translate item.0 %}</a>
+                            {% else %}
+                                <span>{% translate item.0 %}</span>
+                            {% endif %}
+                            {% if forloop.last %}</strong>{% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+    <script src="{% static 'scripts/shortcuts.js' %}"></script>
+    <script src="{% static 'scripts/scheduling.js' %}"></script>
+</body>
+</html>

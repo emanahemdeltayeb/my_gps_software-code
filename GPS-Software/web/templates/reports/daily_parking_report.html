@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block parent_classes_override %}container-fluid h-full w-full p-0{% endblock %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Daily Parking Report</title>
+    <style>
+        .export-buttons {
+            margin-top: 20px;
+        }
+        .export-buttons a {
+            text-decoration: none;
+        }
+        .export-buttons button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .export-buttons button:hover {
+            background-color: #45a049;
+        }
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Daily Parking Report</h1>
+    <table>
+        <tr>
+            <th>Device</th>
+            <th>Last Parked At</th>
+            <th>Location</th>
+        </tr>
+        {% for entry in parking_data %}
+        <tr>
+            <td>{{ entry.device }}</td>
+            <td>{{ entry.last_parked_at }}</td>
+            <td>{{ entry.location }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <!-- Export Buttons -->
+    <div class="export-buttons">
+        <a href="?export=pdf">
+            <button>Export as PDF</button>
+        </a>
+        <a href="?export=csv">
+            <button>Export as CSV</button>
+        </a>
+    </div>
+</body>
+</html>
+{% endblock %}

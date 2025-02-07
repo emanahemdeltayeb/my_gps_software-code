@@ -1,0 +1,45 @@
+body {
+    height: calc(100vh - 80px);
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+main {
+    overflow-y: auto;
+}
+
+.hover-float {
+    transition: transform 0.4s!important;
+}
+
+.hover-float:hover {
+    transform: translateY(-5px)!important;
+}
+
+.nav {
+    padding-inline-start: 0;
+}
+
+[dir=rtl] .dropend .dropdown-toggle::after {
+    display: inline-block;
+    margin-inline-start: .255em;
+    vertical-align: .255em;
+    content: "";
+    border-top: .3em solid transparent;
+    border-left: 0;
+    border-bottom: .3em solid transparent;
+    border-right: .3em solid;
+}
+[dir=rtl] .dropend .dropdown-toggle::after {
+    vertical-align: 0;
+}
+
+[dir=rtl] .fliprtl {
+    transform: scaleX(-1);
+}
+
+input::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    background-color: transparent;
+    display: none;
+}

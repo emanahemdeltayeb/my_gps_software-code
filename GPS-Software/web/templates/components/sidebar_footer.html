@@ -1,0 +1,46 @@
+{% load i18n %}
+{% load static %}
+
+<div class="divider mt-auto mb-0"></div>
+<li>
+    <a id="logout" href="">
+        <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor"><path d="M180-120q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h299v60H180v600h299v60H180Zm486-185-43-43 102-102H360v-60h363L621-612l43-43 176 176-174 174Z"/></svg>
+        
+        {% translate 'Logout' %}
+    </a>
+</li>
+<li class="dropdown dropdown-right dropdown-end dropdown-hover">
+    <button role="button" id="languages" class="w-full">
+        <svg class="h-7 w-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor"><path d="M215.96-455Q244-455 264-467.75T284-506q0-26-19.96-39-19.95-13-48-13Q188-558 168-544.8t-20 38.5q0 25.3 19.96 38.3 19.95 13 48 13ZM80-616v-33h114v-57h42v57h115v33H80Zm135.53 195Q171-421 139-443.19q-32-22.2-32-62.81 0-41.56 32.03-63.28T216-591q45 0 77.5 21.72T326-506q0 41.56-32.5 63.28T215.53-421ZM148-260v-130h43v96h264v34H148Zm245-105v-341h41v150h69v34h-68v157h-42Zm311 45q32.49 0 63.25-15Q798-350 824-377.51V-499q-29 4-51 8.5T731-480q-50 15.78-75 39.45-25 23.68-25 55.24Q631-356 650.91-338q19.91 18 53.09 18Zm-14 51q-54 0-86.5-31T571-383q0-50 34-83.5T709.72-520q22.28-6 50.78-11.5T824-542q0-56-18.5-82.5T739-651q-26 0-53 9.5T621-609l-25-43q35-24 75-37.5t80-13.5q69 0 101 42.5T884-540v262h-50l-6-49q-30 28-66.5 43T690-269Z"/></svg>
+
+        {% translate 'Languages' %}
+        <svg class="w-7 h-7 fliprtl ms-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor"><path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"/></svg>
+    </button>
+    <ul class="dropdown-content z-[999] menu p-2 shadow bg-base-100 rounded-box w-52 ms-0">
+        <li>
+            <a href="/en/{{ request.path|slice:'4:' }}">
+                <img src="{% static 'images/languages/en.png' %}" alt="English" class="w-7 h-7">
+                English
+            </a>
+        </li>
+        <li>
+            <a href="/ar/{{ request.path|slice:'4:' }}">
+                <img src="{% static 'images/languages/ar.png' %}" alt="العربية" class="w-7 h-7">
+                العربية
+            </a>
+        </li>
+        <li>
+            <a href="/ru/{{ request.path|slice:'4:' }}">
+                <img src="{% static 'images/languages/ru.png' %}" alt="Русский" class="w-7 h-7">
+                Русский
+            </a>
+        </li>
+    </ul>
+</li>
+<li>
+    <a id="settings" href="">
+        <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor"><path d="m388-80-20-126q-19-7-40-19t-37-25l-118 54-93-164 108-79q-2-9-2.5-20.5T185-480q0-9 .5-20.5T188-521L80-600l93-164 118 54q16-13 37-25t40-18l20-127h184l20 126q19 7 40.5 18.5T669-710l118-54 93 164-108 77q2 10 2.5 21.5t.5 21.5q0 10-.5 21t-2.5 21l108 78-93 164-118-54q-16 13-36.5 25.5T592-206L572-80H388Zm48-60h88l14-112q33-8 62.5-25t53.5-41l106 46 40-72-94-69q4-17 6.5-33.5T715-480q0-17-2-33.5t-7-33.5l94-69-40-72-106 46q-23-26-52-43.5T538-708l-14-112h-88l-14 112q-34 7-63.5 24T306-642l-106-46-40 72 94 69q-4 17-6.5 33.5T245-480q0 17 2.5 33.5T254-413l-94 69 40 72 106-46q24 24 53.5 41t62.5 25l14 112Zm44-210q54 0 92-38t38-92q0-54-38-92t-92-38q-54 0-92 38t-38 92q0 54 38 92t92 38Zm0-130Z"/></svg>
+
+        {% translate 'Settings' %}
+    </a>
+</li>

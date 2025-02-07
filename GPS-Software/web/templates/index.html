@@ -1,0 +1,237 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block parent_classes_override %}flex gap-3 container-fluid h-full w-full p-3{% endblock %}
+{% block content %}
+<!-- Left Sidebar -->
+<div id="users-sidebar" class="w-80 h-full bg-base-200 overflow-y-auto">
+    <!-- Header -->
+    <div class="p-2">
+        <div class="flex items-center justify-start p-2 mb-2">
+            <h1 class="text-lg font-semibold">Devices List</h1>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="relative">
+            <input type="text" placeholder="Search for a user..."
+            class="input input-bordered w-full ps-4" />
+            <button
+                class="absolute right-2 top-1/2 -translate-y-1/2 bg-blue-500 text-white p-1.5 rounded-md hover:bg-blue-600 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Account List -->
+    <div class="p-2">
+        <div class="rounded-lg">
+            <!-- User Collapsible Header -->
+            <details class="dropdown w-full">
+                <summary class="flex items-center p-3 cursor-pointer btn btn-ghost justify-start">
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500 me-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                        <span class="text-gray-700 dark:text-gray-300 font-medium">I-TRUST SYSTEMS</span>
+                    </div>
+                    <span class="ms-auto text-sm text-gray-500 dark:text-gray-400">(100 Devices)</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </summary>
+
+                <!-- Collapsible Content -->
+                <div class="gap-1">
+                    <!-- Active Account -->
+                    <details class="dropdown w-full">
+                        <summary class="flex justify-start items-center w-full ps-8 p-2 btn btn-ghost">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 me-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span class="text-gray-600 dark:text-gray-300">Active Devices</span>
+                            <span class="ms-auto text-sm text-gray-500 dark:text-gray-400">(100 Devices)</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </summary>
+
+                        <div class="gap-1">
+                            <button class="flex justify-start items-center w-full ps-16 p-2 btn btn-ghost">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentcolor"><path d="M240-160q-50 0-85-35t-35-85H40v-440q0-33 23.5-56.5T120-800h560v160h120l120 160v200h-80q0 50-35 85t-85 35q-50 0-85-35t-35-85H360q0 50-35 85t-85 35Zm0-80q17 0 28.5-11.5T280-280q0-17-11.5-28.5T240-320q-17 0-28.5 11.5T200-280q0 17 11.5 28.5T240-240ZM120-360h32q17-18 39-29t49-11q27 0 49 11t39 29h272v-360H120v360Zm600 120q17 0 28.5-11.5T760-280q0-17-11.5-28.5T720-320q-17 0-28.5 11.5T680-280q0 17 11.5 28.5T720-240Zm-40-200h170l-90-120h-80v120ZM360-540Z"/></svg>
+                                <span class="text-gray-600 dark:text-gray-300">New Truck</span>
+                            </button>
+                            <button class="flex justify-start items-center w-full ps-16 p-2 btn btn-ghost">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentcolor"><path d="M240-200v40q0 17-11.5 28.5T200-120h-40q-17 0-28.5-11.5T120-160v-320l84-240q6-18 21.5-29t34.5-11h440q19 0 34.5 11t21.5 29l84 240v320q0 17-11.5 28.5T800-120h-40q-17 0-28.5-11.5T720-160v-40H240Zm-8-360h496l-42-120H274l-42 120Zm-32 80v200-200Zm100 160q25 0 42.5-17.5T360-380q0-25-17.5-42.5T300-440q-25 0-42.5 17.5T240-380q0 25 17.5 42.5T300-320Zm360 0q25 0 42.5-17.5T720-380q0-25-17.5-42.5T660-440q-25 0-42.5 17.5T600-380q0 25 17.5 42.5T660-320Zm-460 40h560v-200H200v200Z"/></svg>
+                                <span class="text-gray-600 dark:text-gray-300">Employee's Car</span>
+                            </button>
+                        </div>
+                    </details>
+
+                    <!-- Damaged Device -->
+                    <button class="flex justify-start items-center w-full ps-8 p-2 btn btn-ghost">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500 me-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                        <span class="text-gray-600 dark:text-gray-300">Damaged devices</span>
+                        <span class="ms-auto text-sm text-gray-500 dark:text-gray-400">(0/100)</span>
+                    </button>
+
+                    <!-- Disabled Devices -->
+                    <button class="flex justify-start items-center w-full ps-8 p-2 btn btn-ghost">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-500 me-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                        </svg>
+                        <span class="text-gray-600 dark:text-gray-300">Disabled Devices</span>
+                        <span class="ms-auto text-sm text-gray-500 dark:text-gray-400">(0/100)</span>
+                    </button>
+                </div>
+            </details>
+        </div>
+    </div>
+</div>
+<div id="map" class="grow"></div>
+<script>
+    const demoCoords = [
+        [25.3868954,55.4680188],
+        [25.3858584,55.4669348],
+        [25.3851797,55.4662947],
+        [25.3843016,55.4654339],
+        [25.3832625,55.4645236],
+        [25.3822023,55.4634995],
+        [25.381237,55.4626671],
+        [25.380043,55.4615147],
+        [25.3783453,55.4599849],
+        [25.3766098,55.4583887],
+        [25.3747417,55.4565681],
+        [25.3735681,55.4552365],
+        [25.3728745,55.4546077],
+        [25.372460, 55.454076],
+        [25.372374, 55.453602],
+        [25.372553, 55.453199],
+        [25.372884, 55.453006],
+        [25.373445, 55.453181],
+        [25.373424, 55.454274],
+        [25.372856, 55.455093],
+        [25.372383, 55.455779],
+    ]
+    const demoCoordsReverse = [
+        [ 25.372383, 55.455779 ],
+        [ 25.372856, 55.455093 ],
+        [ 25.373424, 55.454274 ],
+        [ 25.373445, 55.453181 ],
+        [ 25.372884, 55.453006 ],
+        [ 25.372553, 55.453199 ],
+        [ 25.372374, 55.453602 ],
+        [ 25.37246, 55.454076 ],
+        [ 25.3728745, 55.4546077 ],
+        [ 25.3735681, 55.4552365 ],
+        [ 25.3747417, 55.4565681 ],
+        [ 25.3766098, 55.4583887 ],
+        [ 25.3783453, 55.4599849 ],
+        [ 25.380043, 55.4615147 ],
+        [ 25.381237, 55.4626671 ],
+        [ 25.3822023, 55.4634995 ],
+        [ 25.3832625, 55.4645236 ],
+        [ 25.3843016, 55.4654339 ],
+        [ 25.3851797, 55.4662947 ],
+        [ 25.3858584, 55.4669348 ],
+        [ 25.3868954, 55.4680188 ]
+    ]
+    
+    // Initialize the map
+    var map = L.map('map').setView([25.3750097, 55.4573421], 16);
+    L.tileLayer('http://{s}.google.com/vt?lyrs=m&x={x}&y={y}&z={z}',{
+        maxZoom: 20,
+        subdomains:['mt0','mt1','mt2','mt3']
+    }).addTo(map);
+
+    var cars = [
+    { label: "Employee's Car", current_coords: demoCoords[0], counter: 0, demo_list: demoCoords, icon: {dimensions: [40,76], url:"{% static 'car.png' %}"} },
+    { label: "New Truck", current_coords: demoCoordsReverse[0], counter: 0, demo_list: demoCoordsReverse, icon: {dimensions: [76,76], url:"{% static 'truck.png' %}"} },
+    ]
+
+    cars.forEach(car => {
+        var carIcon = L.icon({
+            iconUrl: car.icon.url, 
+            iconSize: car.icon.dimensions,
+            iconAnchor: car.icon.dimensions.map(x => x / 2),
+        });
+        var carMarker = L.marker(car.current_coords, { icon: carIcon, rotationAngle: 0 }).addTo(map);
+        carMarker.bindPopup(`<b>${car.label}</b><br>Speed: 0 km/h`);
+        cars[cars.indexOf(car)].marker = carMarker;
+    });
+
+    function calculateDirectionDistance(currentLongLat, previousLongLat) {
+        const [lat1, lon1] = previousLongLat;
+        const [lat2, lon2] = currentLongLat;
+    
+        // Convert degrees to radians
+        const toRadians = (deg) => deg * (Math.PI / 180);
+        const radLat1 = toRadians(lat1);
+        const radLat2 = toRadians(lat2);
+        const deltaLat = toRadians(lat2 - lat1);
+        const deltaLon = toRadians(lon2 - lon1);
+    
+        // Calculate bearing
+        const y = Math.sin(deltaLon) * Math.cos(radLat2);
+        const x =
+            Math.cos(radLat1) * Math.sin(radLat2) -
+            Math.sin(radLat1) * Math.cos(radLat2) * Math.cos(deltaLon);
+        const bearing = Math.atan2(y, x);
+    
+        // Convert radians to degrees and normalize to 0-360
+        const bearingDegrees = (bearing * (180 / Math.PI) + 360) % 360;
+    
+        // Calculate distance using haversine formula
+        const earthRadiusKm = 6371; // Radius of the Earth in kilometers
+        const a =
+            Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
+            Math.cos(radLat1) * Math.cos(radLat2) * Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const distanceKm = earthRadiusKm * c; // Distance in kilometers
+    
+        return {
+            direction: bearingDegrees, // Direction in degrees
+            distance: distanceKm // Distance in kilometers
+        };
+    }    
+    
+    // Function to simulate getting car data
+    function getCar(carIndex) {
+        let car = cars[carIndex];
+        let index = car.counter;
+        if (car.counter >= car.demo_list.length) { index = 0; car.counter = 0 }
+        car.counter += 1;
+
+        var carInfo = calculateDirectionDistance(car.demo_list[index], car.demo_list[index == 0 ? index : index - 1]);
+        var speed = carInfo.distance / 2 * 1000; // 2 seconds to travel the distance
+
+        return {
+            coords: car.demo_list[index],
+            direction: carInfo.direction,
+            speed: speed
+        };
+    }
+
+    // Function to update the car marker
+    function updateCarMarker() {
+        cars.forEach(car => {
+            var carData = getCar(cars.indexOf(car)); // Replace '1' with your car's ID if needed
+            var coords = carData.coords;
+            var direction = carData.direction;
+    
+            car.marker.slideTo(coords, { duration: 2000 })
+            car.marker.setRotationAngle(direction)
+            car.marker.setPopupContent(`<b>${car.label}</b><br>Speed: ${carData.speed.toFixed(2)} km/h`);
+        });
+    }
+
+    // Update car position every 2 seconds
+    setInterval(updateCarMarker, 2000);
+</script>
+{% endblock %}
