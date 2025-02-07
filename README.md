@@ -1,86 +1,212 @@
-# GPS Tracking Software
-## Highlighted Features
+Step 1 : Install Git for Windows:
+    Download git: Visit the official Git website to download the latest version of Git for Windows.
+    Run the installer: Execute the downloaded file and follow the installation prompts. Default options are typically sufficient for most users.
+    Verify installation: Reopen the Command Prompt or PowerShell and type git --version to confirm Git is now recognized.
+    Add Git to the PATH Environment Variable:
+    Find git installation path: The default installation path is usually C:\Program Files\Git\cmd. Verify this location exists or find where Git is installed on your machine.
+    Edit system PATH:
+        Open the Start Menu Search, type in env, and choose "Edit the system environment variables".
+        In the System Properties window, click on "Environment Variables".
+        Under "System variables", scroll to find the "Path" variable and select it, then click "Edit".
+        Click "New" and paste the path to your Git cmd folder (e.g., C:\Program Files\Git\cmd).
+        Click "OK" to close all dialogs and apply these changes.
+    Verify the change: Close and reopen your Command Prompt or PowerShell and type git --version to ensure Git is now recognized.
 
-- Cross-Platform Dashboard (Mobile, Website)
-- Car live monitoring through map
-- Car playback (possible by saving the car’s coords every 0.5s in a car_history db field)
-- Car status (possible by attempting to ping the car every time the user enters monitoring dashboard)
-- Car alerts using push notifications, possible by using same 0.5s loop to check if any of the alert conditions are met
-- Geofencing, user can setup geofencing which can be integrateable with alerts and analysis
-- Account & User management, with availability for reseller account
-- Credits system for each account, each additional car is N credits per month
+Step 2: git clone -b Backend https://github.com/osam7a/GPS-Software/
+Step 3: Environment Setup:
+    1- Install Prerequisites:
+        Install Python: Download Python
+        Install PostgreSQL: Download PostgreSQL
+    2- Set Up Virtual Environment:
+        python -m venv venv
+        venv\Scripts\activate
+    3- Install Django and Dependencies:
+        pip install django djangorestframework psycopg2-binary django-cors-headers django-environ
+    4- Create a Django Project:
+       django-admin startproject core
+       cd core
+       need to add in setting.py :
+       # SECURITY WARNING: keep the secret key used in production secret!
+        #SECRET_KEY = environ['DJANGO-KEY'] # comment this to use the defult
+        #SECRET_KEY = environ.get('DJANGO-KEY', 'default-secret-key')
+    5- Create the App
+       Create a New App:
+        python manage.py startapp api
+    6- Configure PostgreSQL
+        Install PostgreSQL Driver
+        pip install psycopg2
+    7- in setting.py add below:
+        DATABASES = {
+            'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'gps_tracking_db',
+            'USER': 'your_db_user',
+            'PASSWORD': 'your_db_password',
+            'HOST': 'localhost',
+            'PORT': '5432',
+                        }
+                    }
+    8- python manage.py makemigrations
+       python manage.py migrate
+       python manage.py runserver
+    9- add models and views and add the urls edit in below files:
+        api/models.py
+        api/admin.py
+        api/urls.py
+        api/views.py
+        api/serializers.py
+        core/urls.py
+    10 - Token Based Authontication:
+        pip install djangorestframework-simplejwt
+        edit setting.py by add below to installed apps:
+            'rest_framework',
+            'rest_framework_simplejwt.token_blacklist',
+    11- Logging response times, db query performance:
+        edit settings.py by adding logging parameter.
+        for db query use debug_ tool
+        pip install django-debug-toolbar
+        Add 'debug_toolbar' to INSTALLED_APPS in settings.py
+        Add the following middleware to  MIDDLEWARE setting
+        configure the INTERNAL_IPS setting
+        Include Debug Toolbar URL in URLs File
+    to run websocket need daphne core.asgi:application --port 8001 
+    https://winsides.com/how-to-enable-websocket-protocol-in-windows-11/
+    daphne core.asgi:application --port 8001
 
-## Software Architecture
+    12 - Celery with Django's database as the broker and a periodic task for cleanup
+    pip install celery django-celery-results
+    Create a celery.py file in the  project directory
+    add django_celery_results to installed apps in setting.py for storing Celery results in the database.
+    Create a Celery Task 
+    Create a Celery task to save the device's coordinates every 0.5 seconds. 
+    pip install celery django-celery-beat django-celery-results
+    # settings.py
 
-### FRONTEND: React Native
-- **Developer's Guide**:
-    1. Clone the project using `git clone https://github.com/osam7a/GPS-Software`
-    2. Open your Windows terminal, and type `cd frontend`
-    3. Install the required packages using `npm install`
-    4. Use NPX to run the project: `npx expo start`  
-- **Pages:**
-    - **Dashboard:** Contains basic analysis of what is happening including device status, top mileage, number of trips/alerts, etc.
-    - **Devices:** Displays all registered cars with their current status, allowing the user to manage devices (add, edit, delete).
-    - **Monitoring:** Provides a live map view showing the real-time location of selected cars with tracking options.
-    - **Alerts:** Lists all active and historical alerts for the user, with options to manage and customize alert preferences.
-    - **Geo Fence:** Allows users to set up geofencing boundaries for vehicles and view geofence violations.
-    - **Reports:** Provides analytical reports for mileage, trips, and alerts, with export options (e.g., CSV, PDF).
-    - **Users:** Manages accounts for resellers or customers, including user roles, permissions, and statuses.
-    - **Credits:** Displays the current credit balance, usage history, and options to purchase additional credits.
-    - **Settings:** Allows customization of account settings, notification preferences, and geofence configurations.
-- Mobile Features will include:
-    - Push Notifications receiving
-    - Continous requests towards server for device status
+# Celery Configuration
+CELERY_BROKER_URL = 'memory://'  # Use in-memory broker (not suitable for production)
+CELERY_RESULT_BACKEND = 'django-db'  # Use Django database as the result backend
+CELERY_TIMEZONE = 'UTC'
 
-### BACKEND: Django
-- **Developer's Guide**:
-    1. Clone the project using `git clone https://github.com/osam7a/GPS-Software`
-    1. Open your Windows terminal, and type `cd backend`
-    2. Set up a virtual environment using `py -m venv venv`
-    3. Activate the environment `.\venv\Scripts\activate`, or `source venv/bin/activate` on Linux
-    4. Install the required libraries `py -m pip install -r requirements.txt`
-    5. Go through the `.env` file, and look for any changes you need to make
-    6. Migrate the Django webserver `py manage.py migrate`
-    7. Run the webserver through either WSGI for production, or `py manage.py runserver` for development
-- **Specifications**
-    - **LOGGING IS VERY IMPORTANT!** Need to implement file-based logging, preferably in a `logs/` directory. Should include individual logs for request logging, error monitoring, and application performance monitoring (response times, db query performance, overall server health, etc)
-    - Token-based authentication between front-end and back-end
-    - Either Web Sockets or MQTT for connection between IoT and the back-end
-    - Possibly use RabbitMQ for uniting communication of back-end and IoT
-    - Thread & Looping management, regarding MQTT connection for IoT products and regarding deleting car history older than 30 days
-- **Database Scheme:**
-    - **models.Account:**
-        - …
-    - **models.User:**
-        - account_id | `ForeignKey`
-        - username | `CharField`
-        - type | `CharField`  ←`choices=["staff", "customer"]`
-        - status | `CharField`  ←`choices=["active", "expired"]`
-    - **models.Device ( CAR ):**
-        - user_id | `ForeignKey`
-        - status | `CharField`  ←`choices=["online","offline","idle"]`
-        - current_coords | `CharField`  ←`“(long, lat)”`
-        - car_history | `JSONField` ←`[{”timestamp”: “2309431”, “coords”: “(long, lat”)} …]`
+# Add django-celery-beat and django-celery-results to INSTALLED_APPS
+INSTALLED_APPS = [
+    ...
+    'django_celery_beat',
+    'django_celery_results',
+]
+python manage.py migrate
+Configure Celery App 
+core/celery.py
 
-## Project Objectives & Timeline
+# core/__init__.py
 
-### Frontend (50-59 days)
+from .celery import app as celery_app
 
-1. **Setup:** Initial setup of React Native environment. **3-5 days**
-2. **Pages:** Implementing pages with demo data for Monitoring, Alerts, Devices, Geofencing, etc
-    1. ~2-3 Days per page, 9 Pages, **20-27 days in total**
-    2. Using outsourcing, we can cut the amount in half. 6 pages are available for outsourcing, leaving 3 for in-house team. 
-3. **Integration:** Connecting the frontend to the backend APIs, setup continous requests for device tracking. **14 days**
-4. **Push Notifications Receiver:** The mobile app will receive push notifications from the server regarding any set-up alerts. **2 days**
-5. **Testing & Quality Assurance:** Ensure all features work as expected. monitor API response times and app performance, and leave NO bug fixes. **5 days**
-6. **Deployment and Launch:** Launch the mobile apps to App Store and Google Play, then set up the webserver for hosting the web dashboard. **6 days**
+__all__ = ('celery_app',)
 
-### Backend (46-48 days)
+Run Celery Worker and Beat
 
-1. **Setup:** Initial setup of Django project, database configuration 2-3 **days**
-2. **Models & Database:** Design and implement the database scheme of the project **3-4 days**
-3. **API Routes:** Develop API routes for serving database and IoT data through REST **12 days**
-4. **IoT Communication:** Communication with the GPS Devices to be served and prepared for the REST APIs **14 days**
-5. **Alert & Push notification sender:** Set up continous checks for alert conditions to send out push notifications to the device/s 5 **days**
-6. **Testing & Quality Assurance:** Validating API functionality, optimizing database queries **5 days**
-7. **Deployment and Launch:** Setup WSGI server locally and host the django server on it **4 days**
+    Start the Celery Worker:
+    bash
+    Copy
+
+    celery -A core worker --loglevel=info
+
+    Start the Celery Beat Scheduler:
+    bash
+    Copy
+
+    celery -A core beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    python manage.py runserver
+    
+
+    for using django app schedualer instead of celery:
+    pip install django channels django-apscheduler
+    Add to INSTALLED_APPS in core/settings.py:
+    INSTALLED_APPS = [
+    ...
+    'channels',
+    'django_apscheduler',
+    'api',
+]
+Configure Cache in core/settings.py:
+python
+Copy
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',  # Use local memory cache
+        'LOCATION': 'unique-snowflake',  # Unique identifier for the cache
+    }
+}
+python manage.py makemigrations
+python manage.py migrate
+Save Car Coordinates Every 2 Seconds (Cached) in api/tasks.py
+Save Cached History Daily in api/tasks.py
+Clean Up Old Car History Every 30 Days in api/tasks.py
+Schedule Tasks with django-apscheduler in api/tasks.py
+Start the Scheduler in api/apps.py
+Real-Time Updates via WebSocket in api/consumers.py
+add to api/routing.py the webscoket url
+Update core/asgi.py by adding websocket routing.py files
+python manage.py runserver
+python manage.py runworker
+
+for websocket:
+
+daphne core.asgi:application --port 8001
+Testing WebSockets
+Once Daphne is running, you can test WebSockets using a WebSocket client (e.g., websocat or a browser).
+Using websocat:
+websocat ws://localhost:8001/ws/device/1/
+Update your settings.py to use the in-memory channel layer:
+# core/settings.py
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
+}
+Update asgi.py
+Run Daphne and the Worker
+    Start Daphne:
+    daphne core.asgi:application --bind 0.0.0.0 --port 8001
+    in different port of the django runserver to not conflict
+    Start the Worker:
+Open a new terminal and run:
+python manage.py runworker
+Test WebSocket Connections
+Use a WebSocket client (e.g., Postman, a Python script, or browser console) to connect to your WebSocket endpoint, e.g., ws://localhost:8000/ws/device/1/.
+5. Test HTTP APIs
+Use a tool like Postman or cURL to test your HTTP APIs, e.g., http://localhost:8001/api/devices/.
+
+push notifications:
+Firebase Cloud Messaging (FCM)
+Set Up Firebase Cloud Messaging (FCM)
+    Create a Firebase Project:
+        Go to the Firebase Console.
+        Click Add Project and follow the steps to create a new project.
+Add Firebase to Your App:
+    For Android/iOS: Follow the Firebase setup instructions for your platform.
+    For Web: Add Firebase to your web app by including the Firebase SDK
+    Get FCM Server Key:
+    In the Firebase Console, go to Project Settings > Cloud Messaging.
+    Copy the Server Key (you’ll need this to send notifications from your backend).
+pip install pyfcm
+Add FCM Configuration to Django Settings:
+core/settings.py
+# Firebase Cloud Messaging (FCM) settings
+FCM_SERVER_KEY = 'your-fcm-server-key'  # Replace with your FCM server key
+
+for rabbitmq: 
+https://www.erlang.org/downloads
+https://www.rabbitmq.com/docs/install-windows
+https://www.erlang.org/doc/system/versions#version-scheme
+https://test.mosquitto.org/
+https://www.rust-lang.org/learn/get-started
+http://localhost:15672/#/
+https://mosquitto.org/download/
+https://mosquitto.org/download/
+
+we will use email notification for now instead of FCM :
+
+
+
